@@ -8,7 +8,7 @@ I turn ideas into practical web applications, useful tools, and smarter academic
 
 [![Explore My Projects](https://img.shields.io/badge/EXPLORE_MY_PROJECTS-2563EB?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ehtsham071)
 [![WhatsApp Channel](https://img.shields.io/badge/WHATSAPP_CHANNEL-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VaGeTQsD38CNVdW1QS3A)
-[![YouTube](https://img.shields.io/badge/YOUTUBE-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@vustudyhubofficial)
+[![YouTube Main](https://img.shields.io/badge/YOUTUBE-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@vustudyhubofficial)
 
 **Web Development** &nbsp;/&nbsp; **Academic Services** &nbsp;/&nbsp; **AI & Automation**
 
@@ -53,6 +53,8 @@ I am a full stack developer and the founder of **Study Hub Official**. I build h
 | **Study Hub Official** | [Main YouTube Channel](https://youtube.com/@vustudyhubofficial) - Complete VU solutions and guides. |
 | **Study Hub Official Lite** | [Lite Channel](https://www.youtube.com/@StudyHubOfficialLite) - Short updates and quick academic tips. |
 | **Study Hub Official 4U** | [4U Channel](https://www.youtube.com/@StudyHubOfficial4U) - Additional academic resources and lectures. |
+| **VU Internship Projects** | [Projects Channel](https://www.youtube.com/@VUInternshipProjects) - Final year projects guidance and walkthroughs. |
+| **VU Project & Internship Report** | [Reports Channel](https://www.youtube.com/@VUProjectInternshipReport) - Internship report writing and documentation help. |
 | **WhatsApp Channel** | [Join WhatsApp Channel](https://whatsapp.com/channel/0029VaGeTQsD38CNVdW1QS3A) - Direct updates and announcements. |
 
 ---
