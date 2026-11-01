@@ -20,9 +20,10 @@ I turn ideas into practical web applications, useful tools, and smarter academic
 
 I am a full stack developer and the founder of **Study Hub Official**. I build high-quality web applications and assist Virtual University (VU) students with complete academic management.
 
+- **Academic Services:** Complete handling of VU Assignments, Quizzes, GDBs, and 100% Lecture Watching completion.
+- **Projects & Reports:** Final Year Project (CS619 / IT) assistance, Internship Reports, and Report Writing.
+- **Plagiarism Removal:** Professional plagiarism removal and content rewriting to ensure 0% plagiarism in assignments and reports.
 - **Web Applications:** Custom dashboards, database tools, and API integrations.
-- **Academic Management:** LMS handling, assignment solutions, quizzes, GDBs, and lecture watching.
-- **Projects & Reports:** Final year project assistance, internship reports, and plagiarism removal.
 - **My Approach:** Clean code structure, efficient logic, and user-friendly interfaces.
 
 ---
@@ -43,6 +44,17 @@ I am a full stack developer and the founder of **Study Hub Official**. I build h
 | **Databases** | MySQL, Room DB, Firebase, SQLite |
 | **AI & ML Tools** | TensorFlow Lite, spaCy, scikit-learn, Chart.js |
 | **Tools & OS** | Git, GitHub, Android Studio, VirtualBox, Kali Linux, XAMPP |
+
+---
+
+### Academic Services & Solutions
+
+| Service | Overview |
+| :--- | :--- |
+| **VU Assignments, Quizzes & GDBs** | 100% correct and unique solutions for Virtual University coursework. |
+| **Lecture Watching** | Complete LMS lecture watching services to fulfill attendance requirements. |
+| **Projects & Internship Reports** | End-to-end guidance and documentation for CS619 projects and internship reports. |
+| **Plagiarism Removal** | Professional rewriting and editing to fix and remove plagiarism from all academic documents. |
 
 ---
 
