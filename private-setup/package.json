@@ -1,0 +1,11 @@
+{
+  "name": "studyhub-private-setup",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "setup-first-admin": "node setup-first-admin.cjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0"
+  }
+}

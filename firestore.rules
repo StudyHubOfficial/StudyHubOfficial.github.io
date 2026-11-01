@@ -1,0 +1,157 @@
+rules_version = '2';
+
+// Study Hub Official Firestore rules.
+// IMPORTANT: merge with any other existing Firebase rules before publishing.
+// Never allow public reading of the private inquiries collection.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && (
+          // Firebase first admin: authenticated and verified email.
+          (
+            'email' in request.auth.token
+            && 'email_verified' in request.auth.token
+            && request.auth.token.email_verified == true
+            && request.auth.token.email == 'ehtshamulhaq100@gmail.com'
+          )
+          ||
+          // Secondary admin: secret verified by a PRIVATE Cloud Function.
+          // The function alone can mint this signed Firebase custom token.
+          (
+            request.auth.uid == 'studyhub-private-admin-v1'
+            && 'studyhub_private_admin' in request.auth.token
+            && request.auth.token.studyhub_private_admin == true
+          )
+        );
+    }
+
+    function isRequestId(id) {
+      return id.matches('^SH-[A-Z0-9-]{6,50}$');
+    }
+
+    function isRequestKind(kind) {
+      return kind in ['contact-form', 'course-form', 'pi-form'];
+    }
+
+    function optionalShortText(obj, key, maxSize) {
+      return !(key in obj)
+        || (obj[key] is string && obj[key].size() <= maxSize);
+    }
+
+    function publicRequestStatus(id) {
+      return getAfter(/databases/$(database)/documents/public_status/$(id)).data;
+    }
+
+    function privateInquiry(id) {
+      return getAfter(/databases/$(database)/documents/inquiries/$(id)).data;
+    }
+
+    function isNewInquiry(id) {
+      let data = request.resource.data;
+      return isRequestId(id)
+        && data.keys().hasAll(['id', 'kind', 'created_at', 'status', 'note', 'public_review'])
+        && data.keys().hasOnly([
+          'id', 'kind', 'created_at', 'status', 'note', 'public_review',
+          'name', 'phone', 'university', 'course', 'service',
+          'deadline', 'details', 'semester'
+        ])
+        && data.id == id
+        && isRequestKind(data.kind)
+        && data.created_at is string && data.created_at.size() <= 40
+        && data.status == 'new'
+        && data.note == ''
+        && data.public_review == ''
+        && optionalShortText(data, 'name', 3000)
+        && optionalShortText(data, 'phone', 3000)
+        && optionalShortText(data, 'university', 3000)
+        && optionalShortText(data, 'course', 3000)
+        && optionalShortText(data, 'service', 3000)
+        && optionalShortText(data, 'deadline', 3000)
+        && optionalShortText(data, 'details', 3000)
+        && optionalShortText(data, 'semester', 3000)
+        // Both writes must occur in one Firestore atomic batch.
+        && publicRequestStatus(id).id == id
+        && publicRequestStatus(id).kind == data.kind
+        && publicRequestStatus(id).created_at == data.created_at
+        && publicRequestStatus(id).status == 'new';
+    }
+
+    function isNewPublicStatus(id) {
+      let data = request.resource.data;
+      return isRequestId(id)
+        && data.keys().hasAll([
+          'id', 'kind', 'created_at', 'status', 'status_updated_at',
+          'public_review', 'public_review_updated_at'
+        ])
+        && data.keys().hasOnly([
+          'id', 'kind', 'created_at', 'status', 'status_updated_at',
+          'public_review', 'public_review_updated_at'
+        ])
+        && data.id == id
+        && isRequestKind(data.kind)
+        && data.created_at is string && data.created_at.size() <= 40
+        && data.status == 'new'
+        && data.status_updated_at == data.created_at
+        && data.public_review == ''
+        && data.public_review_updated_at == ''
+        && privateInquiry(id).id == id
+        && privateInquiry(id).kind == data.kind
+        && privateInquiry(id).created_at == data.created_at
+        && privateInquiry(id).status == 'new';
+    }
+
+    match /inquiries/{requestId} {
+      // Names, phone numbers, task details and private notes are admin-only.
+      allow get, list: if isAdmin();
+      allow create: if isAdmin() || isNewInquiry(requestId);
+      allow update, delete: if isAdmin();
+    }
+
+    match /public_status/{requestId} {
+      // Public view intentionally contains only non-private request metadata.
+      allow get, list: if true;
+      allow create: if isAdmin() || isNewPublicStatus(requestId);
+      allow update, delete: if isAdmin();
+    }
+
+    match /announcements/{announcementId} {
+      // Students can read published notices, never private drafts.
+      allow get, list: if isAdmin() || resource.data.published == true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /announcement_questions/{questionId} {
+      // Unanswered student questions are visible to admins only.
+      allow get, list: if isAdmin() || resource.data.answered == true;
+      allow create: if isAdmin() || (
+        request.resource.data.keys().hasAll([
+          'id', 'announcement_id', 'name', 'question',
+          'created_at', 'reply', 'answered', 'replied_at'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'id', 'announcement_id', 'name', 'question',
+          'created_at', 'reply', 'answered', 'replied_at'
+        ])
+        && questionId.matches('^Q-[a-zA-Z0-9-]{5,60}$')
+        && request.resource.data.id == questionId
+        && request.resource.data.announcement_id is string
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 45
+        && request.resource.data.question is string
+        && request.resource.data.question.size() >= 5
+        && request.resource.data.question.size() <= 900
+        && request.resource.data.created_at is string
+        && request.resource.data.created_at.size() <= 40
+        && request.resource.data.reply == ''
+        && request.resource.data.answered == false
+        && request.resource.data.replied_at == ''
+        && get(/databases/$(database)/documents/announcements/$(request.resource.data.announcement_id)).data.published == true
+      );
+      allow update, delete: if isAdmin();
+    }
+
+    // Everything else is denied by default. Merge any other project collections deliberately.
+  }
+}
