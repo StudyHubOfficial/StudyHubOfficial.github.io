@@ -78,5 +78,3 @@ Have a project idea or need academic assistance? Get in touch!
 *Build useful things. Keep learning. Make the next version better.*
 
 </div>
-92 304 8244071](https://wa.me/923048244071) / [+92 315 6393346](https://wa.me/923156393346)
-* 📺 **YouTube:** [@vustudyhuboffical](https://youtube.com/@vustudyhuboffical)
